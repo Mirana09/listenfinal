@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ListenEmail">
+<head>
+    <meta charset="UTF-8">
+    <title>Listen to your Email</title>
+</head>
+<body ng-controller="MainController">
+
+    <button ng-click="play()"> Play </button>
+
+    <p ng-model="intro"> {{ intro }} </p>
+
+    <div ng-repeat="x in messages">
+        <p> Message n° {{ x.id }}</p>
+        <p> Date d'envoi : {{ x.date_envoi }}</p>
+        <p> Expediteur : {{ x.expediteur }}</p>
+        <p> Objet : {{ x.objet }}</p>
+        <p> Pièces jointes : {{ x.pieces_jointes }}</p>
+        <p> Texte : {{ x.texte }}</p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script>
+        angular.module('ListenEmail', []).controller('MainController', function ($scope, $http) {
+
+                $http.get('/feedIntro').then(function (response) {
+                    $scope.intro = response.data;
+                });
+
+                $http.get('/feed').then(function (response) {
+                    $scope.messages = response.data;
+                });
+
+                $scope.play = function () {
+                    $http.post('/listen').then(function () {
+                        location.reload();
+                        $scope.messages = {};
+                    })
+                }
+            }
+        );
+    </script>
+
+
+</body>
+</html>
