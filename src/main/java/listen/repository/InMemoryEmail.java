@@ -8,7 +8,6 @@ import java.util.List;
 public class InMemoryEmail implements EmailRepository {
 
     private String intro;
-
     private List<Email> messages = new ArrayList<Email>();
 
     public void vider(){
