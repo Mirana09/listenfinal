@@ -4,9 +4,49 @@
     <meta charset="UTF-8">
     <title>Listen to your Email</title>
 </head>
+
+<style>
+
+    .node rect {
+        cursor: move;
+        fill-opacity: .9;
+        shape-rendering: crispEdges;
+    }
+
+    .node text {
+        pointer-events: none;
+        text-shadow: 0 1px 0 #fff;
+    }
+
+    .link {
+        fill: none;
+        stroke: #000;
+        stroke-opacity: .2;
+    }
+
+    .link:hover {
+        stroke-opacity: .5;
+    }
+
+</style>
+
 <body ng-controller="MainController">
 
-    <button ng-click="play()"> Play </button>
+    <div>
+        <p> Email : </p> <input type="text" class="form-control" name="" id="username" placeholder="Input..." ng-model="user.email">
+        <p> Password : </p><input type="password" class="form-control" name="" id="password" placeholder="Input..." ng-model="user.password">
+    </div>
+
+    <br/>
+
+    <button ng-click="create()"> Create </button>
+
+    <button ng-click="show()"> Show graph </button>
+
+    <a href="messages_recus.csv"> recus </a>
+    <a href="messages_envoyes.csv"> envoyes </a>
+
+    <!-- <button ng-click="play()"> Play </button>
 
     <p ng-model="intro"> {{ intro }} </p>
 
@@ -17,14 +57,14 @@
         <p> Objet : {{ x.objet }}</p>
         <p> Pièces jointes : {{ x.pieces_jointes }}</p>
         <p> Texte : {{ x.texte }}</p>
-    </div>
+    </div> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script>
-        angular.module('ListenEmail', []).controller('MainController', function ($scope, $http) {
+        angular.module('ListenEmail', []).controller('MainController', function ($scope, $http,$window) {
 
-                $http.get('/feedIntro').then(function (response) {
+                /*$http.get('/feedIntro').then(function (response) {
                     $scope.intro = response.data;
                 });
 
@@ -33,13 +73,34 @@
                 });
 
                 $scope.play = function () {
-                    $http.post('/listen').then(function () {
+                    $http.post('/listen', $scope.user).then(function () {
+                        var email = $scope.user.email;
+                        var password = $scope.user.password;
                         location.reload();
-                        $scope.messages = {};
-                    })
-                }
+                        var champ_email = document.getElementById("username");
+                        var champ_password = document.getElementById("password");
+                        champ_email.setRangeText("aaaa");
+                        champ_email.setRangeText("bbbb");
+                        //$scope.messages = {};
+                    });
+                }*/
+
+                $scope.create = function () {
+                    $http.post('/create', $scope.user).then(function () {
+                        var u = "http://" + $window.location.host + "/graph.html";
+                        $window.location.href = u;
+                    });
+                };
             }
         );
+    </script>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="graph.js"></script>
+    <script>
+
+
+
     </script>
 
 

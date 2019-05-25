@@ -22,9 +22,14 @@ public class ReadServiceImpl implements ReadService {
         this.emailRepository = emailRepository;
     }
 
-    public void play(String host, String username, String motdepasse) throws Exception {
+    public void play(User user) throws Exception {
+
+        String username = user.getEmail();
+        String motdepasse = user.getPassword();
 
         emailRepository.vider();
+
+        String host = "imap.gmail.com";
 
         String intro = " ";
         String resultat = " ";

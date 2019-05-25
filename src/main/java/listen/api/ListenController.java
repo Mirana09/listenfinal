@@ -1,11 +1,10 @@
 package listen.api;
 
-import listen.business.Email;
-import listen.business.FeedService;
-import listen.business.ReadService;
+import listen.business.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,6 +18,11 @@ public class ListenController {
     @Autowired
     FeedService feedService;
 
+
+
+    @Autowired
+    CSVService csvService;
+
     @GetMapping("/feed")
     public List<Email> feed() {
         return feedService.afficher();
@@ -30,11 +34,13 @@ public class ListenController {
     }
 
     @PostMapping("/listen")
-    public void play() throws Exception {
-        String host = "imap.gmail.com";
-        String username = "listen2.mail.s8@gmail.com";
-        String motdepasse = "projets8%";
-        readService.play(host,username,motdepasse);
+    public void play(@RequestBody User user) throws Exception {
+        readService.play(user);
+    }
+
+    @PostMapping("/create")
+    public void create(@RequestBody User user) throws Exception {
+        csvService.create(user);
     }
 
 }

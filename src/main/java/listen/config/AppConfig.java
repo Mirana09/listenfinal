@@ -1,19 +1,18 @@
 package listen.config;
 
-import listen.business.FeedService;
-import listen.business.FeedServiceImpl;
-import listen.business.ReadService;
-import listen.business.ReadServiceImpl;
+import listen.business.*;
+import listen.repository.CSVRepository;
+import listen.repository.CSVRepositoryImpl;
+import listen.repository.EmailRepository;
+import listen.repository.InMemoryEmail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import listen.repository.InMemoryEmail;
-import listen.repository.EmailRepository;
 
 @Configuration
 public class AppConfig {
 
     @Bean
-    ReadService connexionGmail() {
+    ReadService readService() {
         return new ReadServiceImpl(repository());
     }
 
@@ -23,8 +22,23 @@ public class AppConfig {
     }
 
     @Bean
+    CSVService csvService() {
+        return new CSVServiceImpl(csvrepository());
+    }
+
+    @Bean
+    FeedCSVService feedCSVService() {
+        return new FeedCSVServiceImpl(csvrepository());
+    }
+
+    @Bean
     EmailRepository repository() {
         return new InMemoryEmail();
+    }
+
+    @Bean
+    CSVRepository csvrepository() {
+        return new CSVRepositoryImpl();
     }
 
 }
