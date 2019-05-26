@@ -1,0 +1,1 @@
+web: java -jar target/listenEmail-1.0-SNAPSHOT.jar
