@@ -1,8 +1,6 @@
 package listen.config;
 
 import listen.business.*;
-import listen.repository.CSVRepository;
-import listen.repository.CSVRepositoryImpl;
 import listen.repository.EmailRepository;
 import listen.repository.InMemoryEmail;
 import org.springframework.context.annotation.Bean;
@@ -22,23 +20,9 @@ public class AppConfig {
     }
 
     @Bean
-    CSVService csvService() {
-        return new CSVServiceImpl(csvrepository());
-    }
-
-    @Bean
-    FeedCSVService feedCSVService() {
-        return new FeedCSVServiceImpl(csvrepository());
-    }
-
-    @Bean
     EmailRepository repository() {
         return new InMemoryEmail();
     }
 
-    @Bean
-    CSVRepository csvrepository() {
-        return new CSVRepositoryImpl();
-    }
 
 }

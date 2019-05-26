@@ -2,95 +2,157 @@
 <html lang="en" ng-app="ListenEmail">
 <head>
     <meta charset="UTF-8">
-    <title>Listen to your Email</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' media='screen' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+
+    <title>Listen to your Email Java application</title>
 </head>
 
 <style>
-
-    .node rect {
-        cursor: move;
-        fill-opacity: .9;
-        shape-rendering: crispEdges;
+    body {
+        color: black;
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/d/d0/Background-clouds.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: relative;
     }
-
-    .node text {
-        pointer-events: none;
-        text-shadow: 0 1px 0 #fff;
+    /* Full-width input fields */
+    input[type=text],
+    input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
     }
-
-    .link {
-        fill: none;
-        stroke: #000;
-        stroke-opacity: .2;
+    input[type=text]:focus,
+    input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
     }
-
-    .link:hover {
-        stroke-opacity: .5;
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
     }
-
+    /* Set a style for all buttons */
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 20%;
+        opacity: 0.9;
+    }
+    button:hover {
+        opacity: 1;
+    }
+    /* Footer */
+    footer {
+        background: #191919;
+        padding: 15px 0;
+        color: #777;
+        font-size: 12px;
+        width: 100%;
+        position: fixed;
+        bottom:0;
+    }
+    footer a {
+        color: #aaa;
+    }
+    footer a:hover {
+        color: #fff;
+    }
+    footer p {
+        margin: 0;
+    }
+    .widget-simplenav {
+        margin-left:-5px;
+    }
+    .widget-simplenav a{
+        margin:0 5px;
+    }
 </style>
 
 <body ng-controller="MainController">
-
-    <div>
-        <p> Email : </p> <input type="text" class="form-control" name="" id="username" placeholder="Input..." ng-model="user.email">
-        <p> Password : </p><input type="password" class="form-control" name="" id="password" placeholder="Input..." ng-model="user.password">
+<div class='navbar navbar-inverse navbar-fixed-top headroom'>
+    <div class='container'>
+        <div class='navbar-collapse collapse'>
+        </div>
     </div>
+</div>
+<br>
+<br>
+
+<p> </p>
+<p> </p>
+<div class="row">
+    <div class="col-md-1"> </div>
+
+    <div class="container content">
+        <div class="container text-center">
+            <br> <br>
+            <h2 class="thin">Bienvenue sur Listen to your email Java application</h2>
+            <p class="text-muted">
+                Notre application permet la connexion à votre compte et la visualisation des mails envoyés et reçus depuis votre boîte mail<br>
+            </p>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    </div>
+
+    <div  class="col-md-1"> </div>
+
+    <div  class="col-md-4 login-form-1">
+        <h3>Identifiants</h3>
+        <form>
+            <p> Email : </p> <input type="text" class="form-control" name="" id="username" placeholder="youremail@gmail.com" ng-model="user.email">
+            <br />
+            <p> Password : </p><input type="password" class="form-control" name="" id="password" placeholder="mot de passe " ng-model="user.password">
+            <br />
+            <button ng-click="play()"> Play </button>
+        </form>
+    </div>
+    <div  class="col-md-2"> </div>
+
+    <div class="col-md-4 login-form-2 class     <p ng-model="intro"> {{ intro }} </p>
+        <div ng-repeat="x in messages">
+            <p> Message n° {{ x.id }}</p>
+            <p> Date d'envoi : {{ x.date_envoi }}</p>
+            <p> Expediteur : {{ x.expediteur }}</p>
+            <p> Objet : {{ x.objet }}</p>
+            <p> Pièces jointes : {{ x.pieces_jointes }}</p>
+            <p> Texte : {{ x.texte }}</p>
+        </div>
+    </div>
+
+    <div  class="col-md-1"> </div>
+</div><div>
+
 
     <br/>
 
-    <button ng-click="create()"> Create </button>
-
-    <button ng-click="show()"> Show graph </button>
-
-    <a href="messages_recus.csv"> recus </a>
-    <a href="messages_envoyes.csv"> envoyes </a>
-
-    <!-- <button ng-click="play()"> Play </button>
-
-    <p ng-model="intro"> {{ intro }} </p>
-
-    <div ng-repeat="x in messages">
-        <p> Message n° {{ x.id }}</p>
-        <p> Date d'envoi : {{ x.date_envoi }}</p>
-        <p> Expediteur : {{ x.expediteur }}</p>
-        <p> Objet : {{ x.objet }}</p>
-        <p> Pièces jointes : {{ x.pieces_jointes }}</p>
-        <p> Texte : {{ x.texte }}</p>
-    </div> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script>
         angular.module('ListenEmail', []).controller('MainController', function ($scope, $http,$window) {
-
-                /*$http.get('/feedIntro').then(function (response) {
+                $http.get('/feedIntro').then(function (response) {
                     $scope.intro = response.data;
                 });
-
                 $http.get('/feed').then(function (response) {
                     $scope.messages = response.data;
                 });
-
                 $scope.play = function () {
                     $http.post('/listen', $scope.user).then(function () {
-                        var email = $scope.user.email;
-                        var password = $scope.user.password;
                         location.reload();
-                        var champ_email = document.getElementById("username");
-                        var champ_password = document.getElementById("password");
-                        champ_email.setRangeText("aaaa");
-                        champ_email.setRangeText("bbbb");
-                        //$scope.messages = {};
                     });
-                }*/
-
-                $scope.create = function () {
-                    $http.post('/create', $scope.user).then(function () {
-                        var u = "http://" + $window.location.host + "/graph.html";
-                        $window.location.href = u;
-                    });
-                };
+                }
             }
         );
     </script>
@@ -98,11 +160,23 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="graph.js"></script>
     <script>
-
-
-
     </script>
-
+    <footer class='top-space'>
+        <div>
+            <div class='container'>
+                <div class='row'>
+                    <div class='col-md-6 widget'>
+                        <div class='widget-body'>
+                            <p class='simplenav'>
+                                <a href='#'>Accueil </a>
+                                <a href='https://polytech.univ-amu.fr/'> Polytech Marseille </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

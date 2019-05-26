@@ -19,10 +19,6 @@ public class ListenController {
     FeedService feedService;
 
 
-
-    @Autowired
-    CSVService csvService;
-
     @GetMapping("/feed")
     public List<Email> feed() {
         return feedService.afficher();
@@ -36,11 +32,6 @@ public class ListenController {
     @PostMapping("/listen")
     public void play(@RequestBody User user) throws Exception {
         readService.play(user);
-    }
-
-    @PostMapping("/create")
-    public void create(@RequestBody User user) throws Exception {
-        csvService.create(user);
     }
 
 }
